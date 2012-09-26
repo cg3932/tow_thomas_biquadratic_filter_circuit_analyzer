@@ -1,0 +1,45 @@
+* ECSE 330 SPICE PROJECT
+* Christian Gallai - 260218797
+* CKT Model w/ Unideal Op-Amp
+* Analysis 4 - Step Response to a 1V step input signal
+
+* Op-Amp Model
+.subckt unideal_opamp 1 2 3
+* connections:        | | |
+*                output | |
+*               +ve input |
+*                 -ve input
+
+R 4 0 1E7
+C 4 5 30p
+Ginput 4 0 Table {V(2)-V(3)} = (-0.08V, -30uA) (+0.08V, 30uA)
+Emiddle 5 0 4 0 -263
+Eoutput 1 0 Table {V(5)} = (-10V, -10V) (10V, 10V)
+
+.ends unideal_opamp
+
+
+* Circuit Description
+
+R1 1 2 8k
+R2 2 3 8k
+R3 3 4 10k
+R4 2 7 10k
+R5 5 6 10k
+R6 6 7 10k
+C1 2 3 9uF
+C2 4 5 2uF
+
+xOA1 3 0 2 unideal_opamp
+xOA2 5 0 4 unideal_opamp
+xOA3 7 0 6 unideal_opamp
+
+
+
+Vi 1 0 PWL(0 0V 1ms 0V 1.001ms 1V 1.25s 1V)
+
+* Circuit Analysis
+
+.TRAN 1ms 1s 0ms 1ms
+.PLOT TRAN V(3)
+.probe

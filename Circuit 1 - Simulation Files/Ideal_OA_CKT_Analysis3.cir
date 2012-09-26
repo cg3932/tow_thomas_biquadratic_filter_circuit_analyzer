@@ -1,0 +1,27 @@
+* ECSE 330 SPICE PROJECT
+* Christian Gallai - 260218797
+* CKT Model w/ Ideal Op-Amp
+* Analysis 3 - Step Response to a 1mV step input signal
+
+* Circuit Description
+
+R1 1 2 8k
+R2 2 3 8k
+R3 3 4 10k
+R4 2 7 10k
+R5 5 6 10k
+R6 6 7 10k
+C1 2 3 9uF
+C2 4 5 2uF
+E1 3 0 0 2 1E6
+E2 5 0 0 4 1E6
+E3 7 0 0 6 1E6
+
+Vi 1 0 PWL(0 0V 1ms 0V 1.001ms 1mV 1.25s 1mV)
+
+* Circuit Analysis
+
+.TRAN 1ms 1s 0ms 1ms
+.PLOT TRAN V(3)
+.probe
+.end
